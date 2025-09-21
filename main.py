@@ -1,7 +1,8 @@
 import os
 import requests
 from datetime import datetime
-import sys
+import tkinter as tk
+from tkinter import messagebox
 
 
 # ---------- Configuration ----------
@@ -20,32 +21,14 @@ USER_PROFILE = {
 NUTRITIONIX_ENDPOINT = "https://trackapi.nutritionix.com/v2/natural/exercise"
 
 
-# ---------- Helpers ----------
-def check_env_vars():
-    """Ensure all required environment variables exist."""
-    missing = [
-        var for var, value in {
-            "NT_APP_ID": NUTRITIONIX_APP_ID,
-            "NT_API_KEY": NUTRITIONIX_API_KEY,
-            "SHEET_ENDPOINT": SHEET_ENDPOINT,
-            "BEARER_TOKEN": BEARER_TOKEN,
-        }.items() if not value
-    ]
-    if missing:
-        sys.exit(f"❌ Missing environment variables: {', '.join(missing)}")
-
-
+# ---------- Functions ----------
 def get_exercises(query: str):
-    """Send query to Nutritionix API and return parsed response."""
     headers = {
         "x-app-id": NUTRITIONIX_APP_ID,
         "x-app-key": NUTRITIONIX_API_KEY,
         "Content-Type": "application/json"
     }
-    payload = {
-        "query": query,
-        **USER_PROFILE
-    }
+    payload = {"query": query, **USER_PROFILE}
 
     response = requests.post(NUTRITIONIX_ENDPOINT, headers=headers, json=payload)
     response.raise_for_status()
@@ -53,7 +36,6 @@ def get_exercises(query: str):
 
 
 def log_to_sheet(exercise):
-    """Send exercise data to Google Sheet via Sheety API."""
     now = datetime.now()
     data = {
         "workout": {
@@ -71,27 +53,47 @@ def log_to_sheet(exercise):
     return response.json()
 
 
-# ---------- Main ----------
-def main():
-    check_env_vars()
+def on_submit():
+    query = entry.get().strip()
+    if not query:
+        messagebox.showwarning("Input Error", "Please enter an exercise.")
+        return
 
-    query = input("Activity & duration (e.g., Cycling – 45 min): ")
     try:
         exercises = get_exercises(query)
         if not exercises:
-            print("⚠️ No exercises found for your input.")
+            messagebox.showinfo("No Results", "No exercises found for your input.")
             return
 
-        for exercise in exercises:
-            sheet_response = log_to_sheet(exercise)
-            print(f"✅ Logged: {exercise['name'].title()} | "
-                  f"{exercise['duration_min']} min | "
-                  f"{exercise['nf_calories']} kcal")
-            print("Sheety response:", sheet_response)
+        output_box.delete("1.0", tk.END)
+        for ex in exercises:
+            log_to_sheet(ex)
+            msg = f"Logged: {ex['name'].title()} | {ex['duration_min']} min | {ex['nf_calories']} kcal\n"
+            output_box.insert(tk.END, msg)
+
+        messagebox.showinfo("Success", "Workout(s) logged successfully!")
 
     except requests.exceptions.RequestException as e:
-        print("❌ API request failed:", e)
+        messagebox.showerror("API Error", f"Something went wrong:\n{e}")
 
 
-if __name__ == "__main__":
-    main()
+# ---------- UI ----------
+root = tk.Tk()
+root.title("Workout Tracker")
+
+frame = tk.Frame(root, padx=10, pady=10)
+frame.pack(fill="both", expand=True)
+
+label = tk.Label(frame, text="Enter activity (e.g., Running 30 min):")
+label.pack(anchor="w")
+
+entry = tk.Entry(frame, width=50)
+entry.pack(pady=5)
+
+submit_btn = tk.Button(frame, text="Log Workout", command=on_submit)
+submit_btn.pack(pady=5)
+
+output_box = tk.Text(frame, height=10, width=60)
+output_box.pack(pady=5)
+
+root.mainloop()
