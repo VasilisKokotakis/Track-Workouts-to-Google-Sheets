@@ -1,6 +1,3 @@
---
-
-````markdown
 # Track Workouts to Google Sheets
 
 A simple Python script that logs your workouts to **Google Sheets**.  
