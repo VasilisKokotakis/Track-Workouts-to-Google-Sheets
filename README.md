@@ -1,22 +1,25 @@
+
 # Track Workouts to Google Sheets
 
-A simple Python script that logs your workouts to **Google Sheets**.  
+A simple Python app with a **basic GUI** that logs your workouts to **Google Sheets**.  
 It uses the [Nutritionix API](https://developer.nutritionix.com/) to parse natural-language exercise descriptions and the [Sheety API](https://sheety.co/) to record the results in a spreadsheet.
 
-
+---
 
 ## ✨ Features
-- Accepts free-text exercise input (e.g., *"Running 30 minutes"*, *"Cycling 45 min"*).
+- Enter exercises in natural language (e.g., *"Running 30 minutes"*, *"Cycling 45 min"*).
 - Fetches duration and calories burned from Nutritionix.
 - Logs date, time, exercise, duration, and calories into Google Sheets.
+- Provides a basic graphical interface (Tkinter).
 - Uses environment variables to keep sensitive credentials safe.
-- Handles API errors gracefully.
+- Error handling for API requests.
 
 ---
 
 ## ⚙️ Requirements
 - Python 3.8+
 - `requests` library
+- `tkinter` (comes pre-installed with most Python distributions)
 
 Install dependencies:
 ```bash
@@ -56,20 +59,25 @@ pip install requests
 
 ## ▶️ Usage
 
-Run the script:
+Run the app:
 
 ```bash
 python exercise_logger.py
 ```
 
-Example interaction:
+You’ll see a small window where you can:
+
+1. Enter an activity (e.g., *"Running 30 minutes"*).
+2. Click **Log Workout**.
+3. View results in the output box.
+
+Example:
 
 ```
-Activity & duration (e.g., Cycling – 45 min): Running 30 minutes
-✅ Logged: Running | 30 min | 350 kcal
+Logged: Running | 30 min | 350 kcal
 ```
 
-Check your Google Sheet — the data should appear automatically.
+Your workout will also be added to your Google Sheet automatically.
 
 ---
 
@@ -77,7 +85,7 @@ Check your Google Sheet — the data should appear automatically.
 
 ```
 .
-├── exercise_logger.py   # Main script
+├── main.py              # Main app with GUI
 └── README.md            # Documentation
 ```
 
@@ -87,12 +95,12 @@ Check your Google Sheet — the data should appear automatically.
 
 * Support multiple activities in one input (comma-separated).
 * Add daily/weekly summary reports.
-* Dockerize for easy deployment.
+* Improve UI with modern styling (e.g., custom widgets, themes).
+* Package as an executable for non-Python users.
 
 ---
 
 ## 📝 License
 
 This project is licensed under the MIT License.
-
 
