@@ -3,7 +3,7 @@
 A simple Python script that logs your workouts to **Google Sheets**.  
 It uses the [Nutritionix API](https://developer.nutritionix.com/) to parse natural-language exercise descriptions and the [Sheety API](https://sheety.co/) to record the results in a spreadsheet.
 
---
+
 
 ## ✨ Features
 - Accepts free-text exercise input (e.g., *"Running 30 minutes"*, *"Cycling 45 min"*).
