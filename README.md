@@ -6,7 +6,7 @@ It uses the [Nutritionix API](https://developer.nutritionix.com/) to parse natur
 
 ---
 
-## ✨ Features
+## Features
 - Enter exercises in natural language (e.g., *"Running 30 minutes"*, *"Cycling 45 min"*).
 - Fetches duration and calories burned from Nutritionix.
 - Logs date, time, exercise, duration, and calories into Google Sheets.
@@ -16,7 +16,7 @@ It uses the [Nutritionix API](https://developer.nutritionix.com/) to parse natur
 
 ---
 
-## ⚙️ Requirements
+## Requirements
 - Python 3.8+
 - `requests` library
 - `tkinter` (comes pre-installed with most Python distributions)
@@ -28,7 +28,7 @@ pip install requests
 
 ---
 
-## 🔑 Setup
+## Setup
 
 1. **Clone the repo**
 
@@ -57,7 +57,7 @@ pip install requests
 
 ---
 
-## ▶️ Usage
+## Usage
 
 Run the app:
 
@@ -81,7 +81,7 @@ Your workout will also be added to your Google Sheet automatically.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 .
@@ -91,7 +91,7 @@ Your workout will also be added to your Google Sheet automatically.
 
 ---
 
-## 🚀 Future Improvements
+## Future Improvements
 
 * Support multiple activities in one input (comma-separated).
 * Add daily/weekly summary reports.
@@ -100,7 +100,9 @@ Your workout will also be added to your Google Sheet automatically.
 
 ---
 
-## 📝 License
+##  License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
 
